@@ -24,9 +24,16 @@ namespace WinUiProject
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+        private int _count = 0;
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void myButton_Click(object sender, RoutedEventArgs e)
+        {
+            _count++;
+            myTextBlock.Text = _count.ToString();
         }
     }
 }

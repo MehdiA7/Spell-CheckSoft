@@ -13,7 +13,9 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid>
-        <Button>Hey bro</Button>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Button x:Name="myButton" Click="myButton_Click" Padding="20">
+            <TextBlock x:Name="myTextBlock" Text="0" FontSize="48"/>
+        </Button>
     </Grid>
 </Window>
