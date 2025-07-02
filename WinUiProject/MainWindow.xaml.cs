@@ -24,16 +24,22 @@ namespace WinUiProject
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        private int _count = 0;
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void myButton_Click(object sender, RoutedEventArgs e)
+        private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            _count++;
-            myTextBlock.Text = _count.ToString();
+            OutputTextBlock.Text = InputTextBox.Text;
+        }
+
+        private void InputTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                SubmitButton_Click(sender, e);
+            }
         }
     }
 }

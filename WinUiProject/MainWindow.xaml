@@ -14,8 +14,10 @@
     </Window.SystemBackdrop>
 
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click" Padding="20">
-            <TextBlock x:Name="myTextBlock" Text="0" FontSize="48"/>
-        </Button>
+        <StackPanel>
+            <TextBox x:Name="InputTextBox" Width="200" Margin="10" KeyDown="InputTextBox_KeyDown" />
+            <Button x:Name="SubmitButton" Content="Send" Click="SubmitButton_Click" Margin="10"/>
+            <TextBlock x:Name="OutputTextBlock" FontSize="24" Margin="10"/>
+        </StackPanel>
     </Grid>
 </Window>
