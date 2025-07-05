@@ -37,6 +37,31 @@ namespace WinUiProject
             InitializeComponent();
         }
 
+        private static void SetWindowDetails(IntPtr hwnd, int width, int height)
+        {
+            // Take screen information to get a good size for the windows
+            var dpi = Windows.Win32.PInvoke.GetDpiForWindow((Windows.Win32.Foundation.HWND)hwnd);
+            float scalingFactor = (float)dpi / 96;
+            width = (int)(width * scalingFactor);
+            height = (int)(height * scalingFactor);
+
+            // Specifie the good position for the windows when is open
+            _ = Windows.Win32.PInvoke.SetWindowPos((Windows.Win32.Foundation.HWND)hwnd,
+                                        Windows.Win32.Foundation.HWND.HWND_TOP,
+                                        0, 0, width, height,
+                                        Windows.Win32.UI.WindowsAndMessaging.SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
+
+            var nIndex = Windows.Win32.PInvoke.GetWindowLong((Windows.Win32.Foundation.HWND)hwnd,
+                      Windows.Win32.UI.WindowsAndMessaging.WINDOW_LONG_PTR_INDEX.GWL_STYLE) &
+                      ~(int)Windows.Win32.UI.WindowsAndMessaging.WINDOW_STYLE.WS_MINIMIZEBOX &
+                      ~(int)Windows.Win32.UI.WindowsAndMessaging.WINDOW_STYLE.WS_MAXIMIZEBOX;
+
+            // to disable the Minimize and Maximize buttons.
+            _ = Windows.Win32.PInvoke.SetWindowLong((Windows.Win32.Foundation.HWND)hwnd,
+                   Windows.Win32.UI.WindowsAndMessaging.WINDOW_LONG_PTR_INDEX.GWL_STYLE,
+                   nIndex);
+        }
+
         /// <summary>
         /// Invoked when the application is launched.
         /// </summary>
@@ -44,7 +69,14 @@ namespace WinUiProject
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             _window = new MainWindow();
+
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(_window);
+
+            SetWindowDetails(hwnd, 800, 600);
+
             _window.Activate();
         }
+
+
     }
 }
