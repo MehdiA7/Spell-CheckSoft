@@ -53,7 +53,7 @@ namespace WinUiProject
             var content = new
             {
                 model = "gemma3n:e4b",
-                prompt = "Salut dis moi que tu sais super bien parler français ?",
+                prompt = $"Répond uniquement pas ce text corrigé : {InputTextBox.Text}",
                 stream = false
             };
 
