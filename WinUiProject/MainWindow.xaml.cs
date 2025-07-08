@@ -52,14 +52,14 @@ namespace WinUiProject
 
             var content = new
             {
-                model = "gemma3n:e4b",
-                prompt = $"Répond uniquement pas ce text corrigé : {InputTextBox.Text}",
+                model = "phi3:3.8b",
+                prompt = $"Répond uniquement par ce text corrigé : {InputTextBox.Text}",
                 stream = false
             };
 
             string result = await _apiService.SendPrompt(apiUrl, content);
 
-            ContentDialog dialog = new ContentDialog
+            ContentDialog dialog = new()
             {
                 Title = "API RESPONSE",
                 Content = result,
