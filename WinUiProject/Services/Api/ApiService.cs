@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace WinUiProject.Services
+namespace WinUiProject.Services.Api
 {
     class ApiService
     {
@@ -17,25 +17,31 @@ namespace WinUiProject.Services
             _httpClient = new HttpClient();
         }
 
-        public async Task<string> SendPrompt(string apiUrl, object body)
+        public async Task<SendPromptApiResponse> SendPrompt(string apiUrl, object body)
         {
             try
             {
                 string jsonData = JsonSerializer.Serialize(body);
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
                 var response = await _httpClient.PostAsync(apiUrl, content);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return response.Content.ReadAsStringAsync().Result;
-                }else
-                {
-                    return $"Error status: {response.StatusCode}";
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+                    return JsonSerializer.Deserialize<SendPromptApiResponse>(responseContent, options);
                 }
-            }catch (Exception ex)
+                else
+                {
+                    throw new Exception($"Error status: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
             {
-                return $"Error bro: {ex.Message}";
+                throw new Exception($"Error bro: {ex.Message}");
             }
         }
     }

@@ -18,7 +18,6 @@
             <TextBox x:Name="InputTextBox" Width="200" Margin="10" KeyDown="InputTextBox_KeyDown" />
             <Button x:Name="SubmitButton" Content="Send" Click="SubmitButton_Click" Margin="10"/>
             <TextBlock x:Name="OutputTextBlock" FontSize="24" Margin="10"/>
-            <Button Click="TalkWithOllama" Content="Send prompt"/>
         </StackPanel>
     </Grid>
 </Window>
